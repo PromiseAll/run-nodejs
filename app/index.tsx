@@ -1,15 +1,28 @@
 import { useRouter } from 'expo-router';
-import { ScrollView } from 'react-native';
+import { ScrollView, StatusBar, Image, FlatList, ToastAndroid } from 'react-native';
+import Toast from 'react-native-root-toast';
 import nodejs from 'nodejs-mobile-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { getStoragePermission } from '@/utils/tools';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import { View, Text, Input, Button, YStack, SizableText, Paragraph, Theme } from 'tamagui';
+import {
+  View,
+  Text,
+  Input,
+  Button,
+  YStack,
+  SizableText,
+  Paragraph,
+  Theme,
+  useTheme,
+} from 'tamagui';
 const testPath = ReactNativeBlobUtil.fs.dirs.DocumentDir + '/nodejs-project/test.js';
 console.log(testPath);
 
 export default function Page() {
   const router = useRouter();
+  const theme = useTheme();
+
   const [logData, setLogData] = useState<any>([]);
   // 手动输入路径
   const [modulePath, setModulePath] = useState(testPath);
@@ -50,22 +63,17 @@ export default function Page() {
         type: 'clearModuleCache',
       })
     );
+    // 使用toast
+    Toast.show('清除成功');
   };
 
   return (
     <YStack
       gap="$2"
-      backgroundColor="$color11"
       style={{ padding: 10, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* <Button onPress={() => router.push({ pathname: '/home' })} title="跳转Home"></Button>
-      <View style={{ marginTop: 20 }}>
-        <Button onPress={() => exportDataToExcel('default')} title="导出excel"></Button>
-      </View> */}
-      {/* 输入框 */}
       <View>
         <Input
           value={modulePath}
-
           onChangeText={setModulePath}
           placeholder="请输入模块路径或URL"
           clearTextOnFocus={true}
@@ -88,12 +96,24 @@ export default function Page() {
           运行
         </Button>
       </View>
-      <View style={{ flex: 1 }} backgroundColor="$color10">
-        <ScrollView
+      <View style={{ flex: 1 }} backgroundColor="$color2" padding="$2">
+        <FlatList
           ref={scrollViewRef}
-          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}>
-          <Text>{logData.map(v => `${v.type}:${v.content}`).join('\n')}</Text>
-        </ScrollView>
+          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+          data={logData}
+          renderItem={({ item, index }) => {
+            return (
+              <View key={index}>
+                <Text
+                  style={{
+                    color: {
+                      log: theme.blue10.val,
+                      error: theme.red10.val,
+                    }[item.type],
+                  }}>{`[${item.type}]:${item.content}`}</Text>
+              </View>
+            );
+          }}></FlatList>
       </View>
     </YStack>
   );
