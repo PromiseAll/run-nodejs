@@ -5,17 +5,7 @@ import nodejs from 'nodejs-mobile-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { getStoragePermission } from '@/utils/tools';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import {
-  View,
-  Text,
-  Input,
-  Button,
-  YStack,
-  SizableText,
-  Paragraph,
-  Theme,
-  useTheme,
-} from 'tamagui';
+import { View, Text, Input, Button, YStack, useTheme } from 'tamagui';
 const testPath = ReactNativeBlobUtil.fs.dirs.DocumentDir + '/nodejs-project/test.js';
 console.log(testPath);
 
@@ -68,9 +58,7 @@ export default function Page() {
   };
 
   return (
-    <YStack
-      gap="$2"
-      style={{ padding: 10, height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <YStack gap="$2" height="100%" padding="$2">
       <View>
         <Input
           value={modulePath}

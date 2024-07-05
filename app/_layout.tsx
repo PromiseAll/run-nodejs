@@ -21,9 +21,9 @@ export default function Layout() {
   }, [colorScheme]);
   return (
     <>
-      <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-        <ThemeProvider value={colorScheme == 'dark' ? DarkTheme : DefaultTheme}>
-          <RootSiblingParent>
+      <RootSiblingParent>
+        <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
+          <ThemeProvider value={colorScheme == 'dark' ? DarkTheme : DefaultTheme}>
             <Stack>
               <Stack.Screen
                 name="index"
@@ -40,9 +40,9 @@ export default function Layout() {
                 }}
               />
             </Stack>
-          </RootSiblingParent>
-        </ThemeProvider>
-      </TamaguiProvider>
+          </ThemeProvider>
+        </TamaguiProvider>
+      </RootSiblingParent>
     </>
   );
 }
