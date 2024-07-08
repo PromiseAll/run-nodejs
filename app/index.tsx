@@ -1,11 +1,12 @@
 import { useRouter } from 'expo-router';
-import { ScrollView, StatusBar, Image, FlatList, ToastAndroid } from 'react-native';
+import { ScrollView, StatusBar, Image, FlatList, Alert, ToastAndroid } from 'react-native';
 import Toast from 'react-native-root-toast';
 import nodejs from 'nodejs-mobile-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { getStoragePermission } from '@/utils/tools';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import { View, Text, Input, Button, YStack, useTheme } from 'tamagui';
+
 const testPath = ReactNativeBlobUtil.fs.dirs.DocumentDir + '/nodejs-project/test.js';
 console.log(testPath);
 
@@ -84,6 +85,7 @@ export default function Page() {
           运行
         </Button>
       </View>
+
       <View style={{ flex: 1 }} backgroundColor="$color2" padding="$2">
         <FlatList
           ref={scrollViewRef}

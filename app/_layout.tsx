@@ -1,12 +1,14 @@
 import '../tamagui-web.css';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { useColorScheme, StatusBar } from 'react-native';
+import { router, Stack } from 'expo-router';
+import { useColorScheme, StatusBar, Text } from 'react-native';
 import {} from 'expo-status-bar';
-import { TamaguiProvider } from 'tamagui';
+import { Button, TamaguiProvider } from 'tamagui';
 import { tamaguiConfig } from '../tamagui.config';
 import { useEffect } from 'react';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { onFetchUpdateAsync } from '@/utils/update';
 type ColorSchemeName = 'light' | 'dark' | null | undefined;
 export default function Layout() {
   const colorScheme = useColorScheme();
@@ -30,6 +32,9 @@ export default function Layout() {
                 options={{
                   headerLargeTitle: true,
                   title: 'Run NodeJS',
+                  headerRight: () => (
+                    <Ionicons name="refresh" size={23} onPress={onFetchUpdateAsync} />
+                  ),
                 }}
               />
               <Stack.Screen
